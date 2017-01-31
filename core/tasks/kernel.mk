@@ -135,14 +135,21 @@ else
         $(warning **********************************************************)
         # $(error "NO KERNEL CONFIG")
     else
-        #$(info Kernel source found, building it)
         FULL_KERNEL_BUILD := true
-        ifeq ($(TARGET_USES_UNCOMPRESSED_KERNEL),true)
-        $(info Using uncompressed kernel)
-            KERNEL_BIN := $(KERNEL_OUT)/piggy
+        ifneq ($(BOARD_KERNEL_IMAGE_NAME),)
+            TARGET_PREBUILT_INT_KERNEL_TYPE := $(BOARD_KERNEL_IMAGE_NAME)
         else
-            KERNEL_BIN := $(TARGET_PREBUILT_INT_KERNEL)
+            ifeq ($(TARGET_USES_UNCOMPRESSED_KERNEL),true)
+                TARGET_PREBUILT_INT_KERNEL_TYPE := Image
+            else
+               ifeq ($(KERNEL_ARCH),arm64)
+                   TARGET_PREBUILT_INT_KERNEL_TYPE := Image.gz
+               else
+                   TARGET_PREBUILT_INT_KERNEL_TYPE := zImage
+               endif
+           endif
         endif
+        KERNEL_BIN := $(TARGET_PREBUILT_INT_KERNEL)
     endif
 endif
 
