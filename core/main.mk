@@ -632,6 +632,7 @@ subdirs += \
 	vendor/nxp \
 	vendor/qcom \
 	vendor/samsung \
+	vendor/sony \
 	vendor/widevine
 
 # Specific projects for Ubuntu Touch
