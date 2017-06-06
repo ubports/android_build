@@ -501,6 +501,9 @@ $(BOOT_ANDROID_RAMDISK_IMG): $(INSTALLED_RAMDISK_TARGET_ANDROID)
 # Download the Ubuntu Touch ramdisk from the archive
 TARGET_UBUNTU_INITRD_PKG ?= ubuntu-touch-generic-initrd
 TARGET_UBUNTU_INITRD_SERIES ?= vivid
+TARGET_UBUNTU_INITRD_TEAM ?= ubports-developers
+TARGET_UBUNTU_INITRD_PPA ?= overlay
+
 TARGET_OUT_UBUNTU_INITRD_PKG := $(TARGET_OUT_UBUNTU)/$(TARGET_UBUNTU_INITRD_PKG)
 TARGET_UBUNTU_INITRD_LP_IMG := $(TARGET_OUT_UBUNTU_INITRD_PKG)/usr/lib/ubuntu-touch-generic-initrd/initrd.img-touch
 TARGET_UBUNTU_INITRD_REPO := $(PWD)/ubuntu/ubuntu_prebuilt_initrd/initrd.img-touch
