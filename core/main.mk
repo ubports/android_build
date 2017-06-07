@@ -618,6 +618,7 @@ subdirs += \
 	device/generic \
 	device/lge \
 	device/samsung \
+	device/oneplus \
 	device/qcom/common \
 	vendor/oneplus/bacon \
 	vendor/oppo/msm8974-common \
