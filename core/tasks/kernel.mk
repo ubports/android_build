@@ -217,18 +217,18 @@ ifeq ($(TARGET_ARCH),$(filter $(TARGET_ARCH),arm arm64))
         ifeq ($(HOST_OS),darwin)
             ifeq ($(TARGET_ARCH),arm64)
 	        TARGET_KERNEL_CROSS_COMPILE_PREFIX:=aarch64-linux-android-
-		ANDROID_TOOLCHAIN:=$(ANDROID_BUILD_TOP)/prebuilt/darwin-x86/toolchain/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)/bin/
+		TARGET_KERNEL_CROSS_COMPILE_TOOLCHAIN_PATH:=$(ANDROID_BUILD_TOP)/prebuilt/darwin-x86/toolchain/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)/bin/
             else
 	        TARGET_KERNEL_CROSS_COMPILE_PREFIX:=arm-eabi-
-		ANDROID_TOOLCHAIN:=$(ANDROID_BUILD_TOP)/prebuilt/darwin-x86/toolchain/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)/bin/
+		TARGET_KERNEL_CROSS_COMPILE_TOOLCHAIN_PATH:=$(ANDROID_BUILD_TOP)/prebuilt/darwin-x86/toolchain/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)/bin/
             endif
         else
             ifeq ($(TARGET_ARCH),arm64)
 	        TARGET_KERNEL_CROSS_COMPILE_PREFIX:=aarch64-linux-android-
-		ANDROID_TOOLCHAIN:=$(ANDROID_BUILD_TOP)/prebuilt/linux-x86/toolchain/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)/bin/
+		TARGET_KERNEL_CROSS_COMPILE_TOOLCHAIN_PATH:=$(ANDROID_BUILD_TOP)/prebuilt/linux-x86/toolchain/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)/bin/
             else
 	        TARGET_KERNEL_CROSS_COMPILE_PREFIX:=arm-eabi-
-		ANDROID_TOOLCHAIN:=$(ANDROID_BUILD_TOP)/prebuilt/linux-x86/toolchain/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)/bin/
+		TARGET_KERNEL_CROSS_COMPILE_TOOLCHAIN_PATH:=$(ANDROID_BUILD_TOP)/prebuilt/linux-x86/toolchain/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)/bin/
             endif
         endif
     else
@@ -237,11 +237,11 @@ ifeq ($(TARGET_ARCH),$(filter $(TARGET_ARCH),arm arm64))
 	        TARGET_KERNEL_CROSS_COMPILE_PREFIX:=aarch64-linux-android-
             endif
         else
-            TARGET_KERNEL_CROSS_COMPILE_PREFIX=arm-eabi-
-            ANDROID_TOOLCHAIN:=$(ARM_EABI_TOOLCHAIN)
+            TARGET_KERNEL_CROSS_COMPILE_PREFIX:=arm-eabi-
+            TARGET_KERNEL_CROSS_COMPILE_TOOLCHAIN_PATH:=$(ARM_EABI_TOOLCHAIN)
         endif
     endif
-    ARM_CROSS_COMPILE:=CROSS_COMPILE="$(ccache) $(ANDROID_TOOLCHAIN)/$(TARGET_KERNEL_CROSS_COMPILE_PREFIX)"
+    ARM_CROSS_COMPILE:=CROSS_COMPILE="$(ccache) $(TARGET_KERNEL_CROSS_COMPILE_TOOLCHAIN_PATH)/$(TARGET_KERNEL_CROSS_COMPILE_PREFIX)"
     ccache =
 endif
 
@@ -250,7 +250,7 @@ define mv-modules
     if [ "$$mdpath" != "" ];then\
         mpath=`dirname $$mdpath`;\
         ko=`find $$mpath/kernel -type f -name *.ko`;\
-        for i in $$ko; do $(ANDROID_TOOLCHAIN)/$(TARGET_KERNEL_CROSS_COMPILE_PREFIX)strip --strip-unneeded $$i;\
+        for i in $$ko; do $(TARGET_KERNEL_CROSS_COMPILE_TOOLCHAIN_PATH)/$(TARGET_KERNEL_CROSS_COMPILE_PREFIX)strip --strip-unneeded $$i;\
         mv $$i $(KERNEL_MODULES_OUT)/; done;\
     fi
 endef
