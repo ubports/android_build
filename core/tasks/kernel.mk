@@ -237,7 +237,7 @@ ifeq ($(TARGET_ARCH),$(filter $(TARGET_ARCH),arm arm64))
 	        TARGET_KERNEL_CROSS_COMPILE_PREFIX:=aarch64-linux-android-
             endif
         else
-            TARGET_KERNEL_CROSS_COMPILE_PREFIX=arm-eabi
+            TARGET_KERNEL_CROSS_COMPILE_PREFIX:=arm-eabi-
             ANDROID_TOOLCHAN:=$(ARM_EABI_TOOLCHAIN)
         endif
     endif
