@@ -90,4 +90,9 @@ PRODUCT_PACKAGES += \
     direct_ubuntu_application_sensors_for_hybris_test \
     direct_ubuntu_application_gps_c_api_for_hybris_test
 
+# Our Android tree has Ubuntu's camera service headers. Set this so that
+# video recording with compat layer works.
+# Not sure if this is the best place to do it.
+CAMERA_SERVICE_WANT_UBUNTU_HEADERS := 1
+
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_minimal.mk)
