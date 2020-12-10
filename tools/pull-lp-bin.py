@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # pull-lp-bin -- pull a binary package from Launchpad
 #
@@ -24,7 +24,7 @@
 
 import os
 import sys
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 from optparse import OptionParser
 from launchpadlib.launchpad import Launchpad
 
@@ -53,7 +53,7 @@ def main():
     distro = lp.distributions['ubuntu']
 
     if options.ppa and not options.team:
-        print "To use a PPA you also need to provide a team (from Launchpad)"
+        print("To use a PPA you also need to provide a team (from Launchpad)")
         return
 
     if options.ppa:
@@ -82,8 +82,8 @@ def main():
         bin_url = bpph[0].binaryFileUrls()[0]
 
     if bin_url:
-        print 'Downloading %s version %s' % (package, version)
-        url = urllib2.urlopen(bin_url)
+        print('Downloading %s version %s' % (package, version))
+        url = urllib.request.urlopen(bin_url)
         data = url.read()
         package_name = "%s_%s_%s.deb" % (package, version, options.ubuntu_arch)
         if options.output:
@@ -93,8 +93,8 @@ def main():
         with open(target, "wb") as package:
             package.write(data)
     else:
-        print "Unable to find a published version of package %s (%s) at %s" % (
-                                        package, options.ubuntu_arch, release)
+        print("Unable to find a published version of package %s (%s) at %s" % (
+                                        package, options.ubuntu_arch, release))
 
 if __name__ == '__main__':
     main()
